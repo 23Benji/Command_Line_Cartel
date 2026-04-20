@@ -1,0 +1,210 @@
+// Variables
+$bg-desktop: #0a0a0c;
+$term-bg: #050505;
+$green: #00ff41;
+$red: #ff003c;
+$yellow: #ffbd2e;
+$dim: #444;
+$font: 'Courier New', Courier, monospace;
+
+// Global Setup
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $bg-desktop;
+  background-image:
+          radial-gradient(circle at center, #1a1a24 0%, #000000 100%),
+          linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px, 30px 30px;
+  font-family: $font;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+::selection {
+  background: $green;
+  color: #000;
+}
+
+// OS Window UI
+.window {
+  width: 900px;
+  max-width: 95vw;
+  height: 650px;
+  max-height: 90vh;
+  background: $term-bg;
+  border: 1px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 255, 65, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+
+  .titlebar {
+    background: #1a1a1a;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border-bottom: 1px solid #333;
+    user-select: none;
+
+    .controls {
+      display: flex;
+      gap: 8px;
+
+      .control-dot { width: 12px; height: 12px; border-radius: 50%; }
+      .close { background: #ff5f56; }
+      .min { background: $yellow; }
+      .max { background: #27c93f; }
+    }
+
+    .title {
+      flex-grow: 1;
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-right: 50px;
+    }
+  }
+}
+
+// Terminal Screen
+.screen {
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  color: $green;
+  font-size: 14px;
+  position: relative;
+
+  &::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+  }
+
+  .text-line { margin-bottom: 8px; line-height: 1.4; }
+  .alert { color: $red; font-weight: bold; }
+  .warning { color: $yellow; font-weight: bold; }
+  .green-bright { color: #fff; text-shadow: 0 0 5px $green; }
+  .dim { color: $dim; }
+}
+
+// Network Sniffer Minigame
+#game-container {
+  display: none;
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px dashed $dim;
+  background: rgba(0, 255, 65, 0.02);
+
+  #game-msg { margin-top: 15px; height: 1.4em; }
+}
+
+#network-stream {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: #020202;
+  border: 1px solid #222;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.packet {
+  position: absolute;
+  padding: 4px 8px;
+  font-size: 12px;
+  background: rgba(0, 255, 65, 0.1);
+  border-left: 2px solid $green;
+  color: $dim;
+  white-space: nowrap;
+  cursor: crosshair;
+  user-select: none;
+  animation: slideRight linear forwards;
+  transition: background 0.1s;
+
+  &:hover {
+    background: rgba(0, 255, 65, 0.3);
+    color: $green;
+    border-left: 2px solid #fff;
+    z-index: 10;
+  }
+
+  .data-segment {
+    color: $green;
+    margin-left: 10px;
+  }
+}
+
+@keyframes slideRight {
+  0% { left: -300px; }
+  100% { left: 100%; }
+}
+
+.trace-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 12px;
+
+  .trace-label { width: 150px; color: $red; }
+
+  .trace-bar-bg {
+    flex-grow: 1;
+    height: 10px;
+    background: #111;
+    border: 1px solid #333;
+    position: relative;
+
+    #trace-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: $red;
+      box-shadow: 0 0 10px $red;
+      transition: width 0.3s ease-out;
+    }
+  }
+}
+
+// Directory Listing / Vault
+#vault-content {
+  display: none;
+
+  .text-line.alert { margin-top: 20px; }
+}
+
+.dir-list {
+  white-space: pre;
+  line-height: 1.6;
+  margin-top: 20px;
+
+  a {
+    color: $green;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $green;
+      color: #000;
+    }
+  }
+}
+
+.blink { animation: blinker 1s step-start infinite; }
+@keyframes blinker { 50% { opacity: 0; } }
