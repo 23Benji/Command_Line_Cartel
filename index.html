@@ -2,9 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S Y S T E M _ O V E R R I D E</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="window" id="main-window">
+        <div class="titlebar">
+            <div class="controls">
+                <div class="control-dot close"></div>
+                <div class="control-dot min"></div>
+                <div class="control-dot max"></div>
+            </div>
+            <div class="title">root@kali: ~/tools/exploit_db</div>
+        </div>
+        
+        <div class="screen" id="screen">
+            <div id="output"></div>
+
+            <div id="game-container">
+                <div class="warning text-line">>> INITIALIZING LIVE PACKET SNIFFER (eth0) ...</div>
+                <div class="text-line">Mission: Intercept the authentication token before the connection closes.</div>
+                <div class="text-line">Action: <span class="green-bright">Click the packet containing the payload signature [0xROOT]</span></div>
+                <div class="alert text-line">Warning: Intercepting garbage data will alert the system admin.</div>
+                
+                <div id="network-stream"></div>
+                
+                <div class="trace-container">
+                    <div class="trace-label">ADMIN TRACE LEVEL:</div>
+                    <div class="trace-bar-bg">
+                        <div id="trace-bar-fill"></div>
+                    </div>
+                </div>
+                <div id="game-msg" class="text-line"></div>
+            </div>
+
+            <div id="vault-content">
+                <div id="vault-history"></div>
+                <div id="vault-input-line">
+                    <span id="vault-prompt" class="green-bright">root@kali:~$</span>
+                    <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" autofocus>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

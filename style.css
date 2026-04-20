@@ -1,0 +1,158 @@
+:root {
+    --bg-desktop: #020402; /* Deep, dark green-tinted black */
+    --term-bg: rgba(5, 5, 5, 0.85);
+    --green: #00ff41;
+    --red: #ff003c;
+    --yellow: #ffbd2e;
+    --blue: #3b8eea; 
+    --dim: #999999; 
+    --font: 'Courier New', Courier, monospace;
+}
+
+/* Global Setup */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-desktop);
+    font-family: var(--font);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Smooth Particle Canvas */
+#bg-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+::selection {
+    background: var(--green);
+    color: #000;
+}
+
+/* OS Window UI */
+.window {
+    width: 1000px; 
+    max-width: 95vw;
+    height: 695px;
+    max-height: 90vh;
+    background: var(--term-bg);
+    backdrop-filter: blur(5px); /* Soft blur for the glass effect */
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 255, 65, 0.05);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    z-index: 10; 
+}
+
+.window .titlebar {
+    background: #1a1a1a;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border-bottom: 1px solid #333;
+    user-select: none;
+}
+
+.window .titlebar .controls { display: flex; gap: 8px; }
+.window .titlebar .controls .control-dot { width: 12px; height: 12px; border-radius: 50%; }
+.window .titlebar .controls .close { background: #ff5f56; }
+.window .titlebar .controls .min { background: var(--yellow); }
+.window .titlebar .controls .max { background: #27c93f; }
+
+.window .titlebar .title {
+    flex-grow: 1;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-right: 50px;
+}
+
+/* Terminal Screen */
+.screen {
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: var(--green);
+    font-size: 15px;
+    position: relative;
+}
+
+/* Scanlines */
+.screen::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+}
+
+.screen .text-line { margin-bottom: 8px; line-height: 1.4; word-wrap: break-word; }
+.screen .alert { color: var(--red); font-weight: bold; }
+.screen .warning { color: var(--yellow); font-weight: bold; }
+.screen .dir-name { color: var(--blue); font-weight: bold; }
+.screen .green-bright { color: #fff; text-shadow: 0 0 5px var(--green); }
+.screen .dim { color: var(--dim); } 
+
+/* Minigame overrides */
+#game-container { display: none; margin-top: 20px; padding: 15px; border: 1px dashed var(--dim); background: rgba(0, 255, 65, 0.05); }
+#game-container #game-msg { margin-top: 15px; height: 1.4em; }
+#network-stream { position: relative; width: 100%; height: 200px; background: #020202; border: 1px solid #333; overflow: hidden; margin: 15px 0; }
+.packet { position: absolute; padding: 4px 8px; font-size: 12px; background: rgba(0, 255, 65, 0.1); border-left: 2px solid var(--green); color: var(--dim); white-space: nowrap; cursor: crosshair; user-select: none; animation: slideRight linear forwards; transition: background 0.1s; }
+.packet:hover { background: rgba(0, 255, 65, 0.3); color: var(--green); border-left: 2px solid #fff; z-index: 10; }
+.packet .data-segment { color: var(--green); margin-left: 10px; }
+@keyframes slideRight { 0% { left: -300px; } 100% { left: 100%; } }
+.trace-container { display: flex; align-items: center; margin-top: 10px; font-size: 12px; }
+.trace-container .trace-label { width: 150px; color: var(--red); }
+.trace-container .trace-bar-bg { flex-grow: 1; height: 10px; background: #111; border: 1px solid #333; position: relative; }
+.trace-container .trace-bar-bg #trace-bar-fill { height: 100%; width: 0%; background: var(--red); box-shadow: 0 0 10px var(--red); transition: width 0.3s ease-out; }
+
+/* Interactive Vault CLI */
+#vault-content { display: none; margin-top: 20px; }
+#vault-history { margin-bottom: 10px; }
+
+#vault-input-line {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+}
+
+#vault-prompt {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+#terminal-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: var(--font);
+    font-size: 15px;
+    outline: none;
+    flex-grow: 1;
+    text-shadow: 0 0 5px var(--green);
+}
+
+.blink { animation: blinker 1s step-start infinite; }
+@keyframes blinker { 50% { opacity: 0; } }
