@@ -1,0 +1,26 @@
+{
+    "root": {
+        "payloads": { "type": "dir" },
+        "network_tools": { "type": "dir" },
+        "crypto": { "type": "dir" },
+        "CLASSIFIED": { "type": "dir" }
+    },
+    "root/payloads": { 
+        "Payload_Anatomy.pdf": { "type": "file", "fileURL": "Payload_Anatomy.pdf", "preview": "%PDF-1.4\n%\n1 0 obj\n<</Type/Catalog/Pages 2 0 R>>" }, 
+        "readme.txt": { "type": "txt", "content": "PAYLOAD ANATOMY FOLDER\nDeep dive into the structure of harmless payloads." } 
+    },
+    "root/network_tools": { 
+        "Network_Sniffing.zip": { "type": "file", "fileURL": "Network_Sniffing.zip", "preview": "PK\u0003\u0004\u0014\u0000\u0000\u0000\b\u0000m\u0018\u0011S\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000" }
+    },
+    "root/crypto": { 
+        "Rev_Engineering.bin": { "type": "file", "fileURL": "Rev_Engineering.bin", "preview": "00000000  7f 45 4c 46 02 01 01 00" }
+    },
+    "root/CLASSIFIED": {
+        "Zero_Day_Exploit.exe": { 
+            "type": "file", 
+            "fileURL": "Zero_Day.exe", 
+            "preview": "WARNING: MILITARY GRADE PAYLOAD DETECTED.\nHEURISTIC ANALYSIS FAILING.\nPROCEED WITH EXTREME CAUTION.",
+            "restricted": true 
+        }
+    }
+}

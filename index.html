@@ -10,6 +10,20 @@
 
     <canvas id="bg-canvas"></canvas>
 
+    <div id="ids-log-container">
+        <div id="ids-header">SYSTEM.IDS // LIVE FEED</div>
+        <div id="ids-feed"></div>
+    </div>
+
+    <div id="quake-terminal">
+        <div id="quake-history"></div>
+        <div id="quake-input-line">
+            <span class="green-bright">sysadmin@root:~#</span>
+            <input type="text" id="quake-input" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="dim" style="position: absolute; bottom: 10px; right: 20px; font-size: 12px;">Press [ ~ ] to close</div>
+    </div>
+
     <div class="window" id="main-window">
         <div class="titlebar">
             <div class="controls">
@@ -18,7 +32,10 @@
                 <div class="control-dot max"></div>
             </div>
             <div class="title">root@kali: ~/tools/exploit_db</div>
+            
+            <div id="terminal-toggle">>_ TERMINAL</div>
         </div>
+        
         
         <div class="screen" id="screen">
             <div id="output"></div>
@@ -41,12 +58,36 @@
             </div>
 
             <div id="vault-content">
-                <div id="vault-history"></div>
-                <div id="vault-input-line">
-                    <span id="vault-prompt" class="green-bright">root@kali:~$</span>
-                    <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" autofocus>
+                <div id="breadcrumb" class="text-line green-bright"></div>
+                <div id="explorer-grid"></div>
+            </div>
+            
+            <div id="file-modal">
+                <div id="modal-header">
+                    <span id="modal-title" class="alert">Filename.ext</span>
+                    <span id="modal-close">[X] CLOSE</span>
+                </div>
+                <div id="modal-body">
+                    <pre id="modal-text-content"></pre>
+                    <div id="modal-blur-overlay">
+                        <button id="modal-download-btn">DOWNLOAD FULL FILE</button>
+                    </div>
                 </div>
             </div>
+            
+            <div id="cracker-modal">
+                <div class="alert text-line" style="font-size: 20px;">RESTRICTED FILE: ENCRYPTION LAYER DETECTED</div>
+                <div class="text-line dim">Intercept the changing hash to bypass security protocols.</div>
+                
+                <div id="cracker-target">TARGET PIN: <span id="target-pin" class="green-bright">0000</span></div>
+                
+                <div id="cracker-hash-stream">A7F9</div>
+                
+                <div id="cracker-timer">TIME REMAINING: <span id="timer-val" class="alert">10.00</span>s</div>
+                
+                <button id="crack-btn">INJECT PAYLOAD [SPACEBAR]</button>
+            </div>
+
         </div>
     </div>
 
